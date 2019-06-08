@@ -1,8 +1,8 @@
-package PhonePad;
+package Common;
 
 import java.sql.*;
 
-public class DataModulePhonePad {	
+public class DataModule {	
     private Connection connectDB;
     private Statement statMain;
     private ResultSet rsMain;
@@ -11,8 +11,8 @@ public class DataModulePhonePad {
     private Statement statExec;
     private String url;
 
-    public DataModulePhonePad(String DBDest) {
-        this.url = PhonePadStrings.UrlPre + DBDest;
+    public DataModule(String DBDest) {
+        this.url = Strings.UrlPre + DBDest;
         connectDB = null;
         try {
             try {
@@ -34,7 +34,7 @@ public class DataModulePhonePad {
     public void openMain(){
         try {
             statMain = connectDB.createStatement();
-            rsMain = statMain.executeQuery(PhonePadStrings.SqlSelMain);
+            rsMain = statMain.executeQuery(Strings.SqlSelMain);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,7 +76,7 @@ public class DataModulePhonePad {
         int res = -1;
         try {
             statExec = connectDB.createStatement();
-            res = statExec.executeUpdate(PhonePadStrings.SqlDelete+id);
+            res = statExec.executeUpdate(Strings.SqlDelete+id);
             statExec.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,7 +87,7 @@ public class DataModulePhonePad {
     public void openTypes(){
         try {
             statTypes = connectDB.createStatement();
-            rsTypes = statTypes.executeQuery(PhonePadStrings.SqlSelTypes);
+            rsTypes = statTypes.executeQuery(Strings.SqlSelTypes);
         } catch (SQLException e) {
             e.printStackTrace();
         }

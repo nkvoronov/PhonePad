@@ -1,9 +1,15 @@
-package PhonePad;
+package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.TableModel;
+
+import Common.DataModule;
+import Common.DBTableModel;
+
+import static Common.Common.getImagesPatch;
+import static Common.Strings.*;
 
 @SuppressWarnings("serial")
 public class PhonePad extends JFrame implements WindowListener, ActionListener {
@@ -12,36 +18,34 @@ public class PhonePad extends JFrame implements WindowListener, ActionListener {
 	private JButton jbtAdd;
 	private JButton jbtEdt;
 	private JButton jbtDel;
-	private PhonePadTableModel maintm;
-	private DataModulePhonePad dm;
+	private DBTableModel maintm;
+	private DataModule dm;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PhonePad frame = new PhonePad(PhonePadStrings.TitleApp);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		
+		 try {
+	            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException e) {
+	            e.printStackTrace();
+	        }
+	        EventQueue.invokeLater(() -> new PhonePad().setVisible(true));
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public PhonePad(String title) {
-		super(title);
+	public PhonePad() {
+		setTitle(TitleApp);
+        setIconImage(new ImageIcon(getImagesPatch() + "main.png").getImage());
 		getContentPane().setLayout(new BorderLayout(0, 0));		
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        dm = new DataModulePhonePad("notepad.sqlite");
+        dm = new DataModule("notepad.sqlite");
         dm.openMain();
-        maintm = new PhonePadTableModel();
+        maintm = new DBTableModel();
         maintm.initData(dm.getRsMain());
         jtabMain = new JTable(maintm);
         JScrollPane jscrlp = new JScrollPane(jtabMain);
@@ -49,13 +53,13 @@ public class PhonePad extends JFrame implements WindowListener, ActionListener {
         add(jscrlp, BorderLayout.CENTER);
         jtabMain.setRowSelectionInterval(0, 0);
         jbtPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        jbtAdd = new JButton(PhonePadStrings.TitleBtAdd);
+        jbtAdd = new JButton(TitleBtAdd);
         jbtAdd.setActionCommand("add");
         jbtAdd.addActionListener(this);
-        jbtEdt = new JButton(PhonePadStrings.TitleBtEdt);
+        jbtEdt = new JButton(TitleBtEdt);
         jbtEdt.setActionCommand("edt");
         jbtEdt.addActionListener(this);
-        jbtDel = new JButton(PhonePadStrings.TitleBtDel);
+        jbtDel = new JButton(TitleBtDel);
         jbtDel.setActionCommand("del");
         jbtDel.addActionListener(this);
         jbtPanel.add(jbtAdd);
@@ -106,7 +110,7 @@ public class PhonePad extends JFrame implements WindowListener, ActionListener {
 
     public void addRecords(){
         TableModel tm = jtabMain.getModel();
-        DialogAddEdtMain dae = new DialogAddEdtMain(this,PhonePadStrings.TitleDlgAdd, dm);
+        DialogAddEdt dae = new DialogAddEdt(this, TitleDlgAdd, dm);
         dae.setVisible(true);
         if (dae.getModalResult() != 0) {
             if (dm.editMain(-1, dae.tfFirstName.getText(), dae.tfLastName.getText(), dae.cbTypes.getSelectedIndex(), dae.tfPhone.getText()) != -1){
@@ -120,7 +124,7 @@ public class PhonePad extends JFrame implements WindowListener, ActionListener {
         int row = jtabMain.getSelectedRow();
         TableModel tm = jtabMain.getModel();
         if (row != -1) {
-            DialogAddEdtMain dae = new DialogAddEdtMain(this, PhonePadStrings.TitleDlgEdt, dm);
+            DialogAddEdt dae = new DialogAddEdt(this, TitleDlgEdt, dm);
             id = (String) tm.getValueAt(row, 0);
             dae.tfFirstName.setText((String) tm.getValueAt(row, 1));
             dae.tfLastName.setText((String) tm.getValueAt(row,2));

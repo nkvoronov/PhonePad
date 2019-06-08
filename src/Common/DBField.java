@@ -1,16 +1,16 @@
-package PhonePad;
+package Common;
 
-public class FieldDataBase {
+public class DBField {
     private String title;
     private String name;
     private int type = 0;
     private Boolean visible = true;
     
-    public FieldDataBase(String name) {
+    public DBField(String name) {
         this.name = name;
     }
 
-    public FieldDataBase(String name, String title) {
+    public DBField(String name, String title) {
         this.name = name;
         this.title = title;
     }

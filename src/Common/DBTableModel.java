@@ -1,13 +1,13 @@
-package PhonePad;
+package Common;
 
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
-public class PhonePadTableModel extends AbstractTableModel{
+public class DBTableModel extends AbstractTableModel{
     private int countRows;
-    private MainFieldSet mfs;
+    private DBFieldSet mfs;
     private ArrayList<String[]> data;
     
     public void initData(ResultSet rs){
@@ -28,9 +28,9 @@ public class PhonePadTableModel extends AbstractTableModel{
         }
     }
 
-    public PhonePadTableModel(){
+    public DBTableModel(){
         super();
-        mfs = new MainFieldSet();
+        mfs = new DBFieldSet();
         data = new ArrayList<>();
     }
 
