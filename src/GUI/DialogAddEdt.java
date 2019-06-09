@@ -11,7 +11,7 @@ import Common.DataModule;
 import static Common.Strings.*;
 
 @SuppressWarnings("serial")
-public class DialogAddEdt extends JDialog implements WindowListener, ActionListener {	
+public class DialogAddEdt extends JDialog implements ActionListener {	
     private int ModalResult = 0;
     private DataModule datamodule;
     private JButton btOK;
@@ -33,8 +33,8 @@ public class DialogAddEdt extends JDialog implements WindowListener, ActionListe
 
         JPanel pnContent = new JPanel();
         GridBagLayout gbl_pnContent = new GridBagLayout();
-        gbl_pnContent.columnWidths = new int[] {0, 0, 0, 0, 0};
-        gbl_pnContent.rowHeights = new int[] {0, 0, 0, 0, 0};
+        gbl_pnContent.columnWidths = new int[] {0, 0, 30, 30};
+        gbl_pnContent.rowHeights = new int[] {0, 0, 0, 0};
         gbl_pnContent.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
         gbl_pnContent.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
         pnContent.setLayout(gbl_pnContent);
@@ -143,44 +143,7 @@ public class DialogAddEdt extends JDialog implements WindowListener, ActionListe
             onOK();
         } else if (e.getActionCommand().equals("cancel")) {
             onCancel();
-        } else if (e.getActionCommand().equals("types")) {
-            onTypes();
         }
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-        onCancel();
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
     }
 
     private void onOK() {
@@ -191,10 +154,6 @@ public class DialogAddEdt extends JDialog implements WindowListener, ActionListe
     private void onCancel() {
         ModalResult = 0;
         dispose();
-    }
-
-    private void onTypes() {
-
     }
 
 	private void addTypes() {

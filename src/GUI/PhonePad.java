@@ -8,11 +8,10 @@ import javax.swing.table.TableModel;
 import Common.DataModule;
 import Common.DBTableModel;
 
-import static Common.Common.getImagesPatch;
 import static Common.Strings.*;
 
 @SuppressWarnings("serial")
-public class PhonePad extends JFrame implements WindowListener, ActionListener {
+public class PhonePad extends JFrame implements ActionListener {
 	private JTable jtabMain;
 	private JPanel jbtPanel;
 	private JButton jbtAdd;
@@ -21,11 +20,7 @@ public class PhonePad extends JFrame implements WindowListener, ActionListener {
 	private DBTableModel maintm;
 	private DataModule dm;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) {		
 		 try {
 	            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException e) {
@@ -34,12 +29,9 @@ public class PhonePad extends JFrame implements WindowListener, ActionListener {
 	        EventQueue.invokeLater(() -> new PhonePad().setVisible(true));
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public PhonePad() {
 		setTitle(TitleApp);
-        setIconImage(new ImageIcon(getImagesPatch() + "main.png").getImage());
+        setIconImage(Toolkit.getDefaultToolkit().getImage(PhonePad.class.getResource("/Resorces/main.png")));
 		getContentPane().setLayout(new BorderLayout(0, 0));		
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,9 +40,17 @@ public class PhonePad extends JFrame implements WindowListener, ActionListener {
         maintm = new DBTableModel();
         maintm.initData(dm.getRsMain());
         jtabMain = new JTable(maintm);
+        jtabMain.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getClickCount() == 2) {
+        			edtRecords();		
+        		}	
+        	}
+        });
         JScrollPane jscrlp = new JScrollPane(jtabMain);
         jtabMain.setPreferredScrollableViewportSize(new Dimension(450, 110));
-        add(jscrlp, BorderLayout.CENTER);
+        getContentPane().add(jscrlp, BorderLayout.CENTER);
         jtabMain.setRowSelectionInterval(0, 0);
         jbtPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         jbtAdd = new JButton(TitleBtAdd);
@@ -65,33 +65,16 @@ public class PhonePad extends JFrame implements WindowListener, ActionListener {
         jbtPanel.add(jbtAdd);
         jbtPanel.add(jbtEdt);
         jbtPanel.add(jbtDel);
-        add(jbtPanel, BorderLayout.SOUTH);
-        this.addWindowListener(this);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+		      dm.closeDB();
+			}
+		});
+        getContentPane().add(jbtPanel, BorderLayout.SOUTH);
 		setPosToCenterScreen();
 	}
 	
-    @Override
-    public void windowClosed(WindowEvent e) {}
-
-    @Override
-    public void windowIconified(WindowEvent e) {}
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {}
-
-    @Override
-    public void windowActivated(WindowEvent e) {}
-    @Override
-    public void windowDeactivated(WindowEvent e) {}
-
-    @Override
-    public void windowOpened(WindowEvent e) {}
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-        dm.closeDB();
-    }
-
 	private void setPosToCenterScreen() {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);		
@@ -159,5 +142,4 @@ public class PhonePad extends JFrame implements WindowListener, ActionListener {
         jtabMain.setVisible(true);
         jtabMain.setRowSelectionInterval(row,row);
     }
-
 }
