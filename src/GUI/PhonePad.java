@@ -31,7 +31,7 @@ public class PhonePad extends JFrame implements ActionListener {
 
 	public PhonePad() {
 		setTitle(TitleApp);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(PhonePad.class.getResource("/Resorces/main.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(PhonePad.class.getResource("/Resources/main.png")));
 		getContentPane().setLayout(new BorderLayout(0, 0));		
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
