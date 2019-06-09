@@ -8,8 +8,6 @@ import javax.swing.*;
 
 import Common.DataModule;
 
-import static Common.Strings.*;
-
 @SuppressWarnings("serial")
 public class DialogAddEdt extends JDialog implements ActionListener {	
     private int ModalResult = 0;
@@ -28,6 +26,7 @@ public class DialogAddEdt extends JDialog implements ActionListener {
     
     public DialogAddEdt(Frame owner, String title, DataModule datamodule) {
         super(owner, title);
+        setTitle(Messages.getString("TitleDlgAdd"));
         this.datamodule = datamodule;
         getContentPane().setLayout(new BorderLayout());
 
@@ -39,7 +38,7 @@ public class DialogAddEdt extends JDialog implements ActionListener {
         gbl_pnContent.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
         pnContent.setLayout(gbl_pnContent);
 
-        JLabel lbFirstName = new JLabel(FieldsName[1]);
+        JLabel lbFirstName = new JLabel(Messages.getString("FieldFirstName"));
         GridBagConstraints gbc_lbFirstName = new GridBagConstraints();
         gbc_lbFirstName.insets = new Insets(4, 8, 4, 4);
         gbc_lbFirstName.anchor = GridBagConstraints.EAST;
@@ -58,7 +57,7 @@ public class DialogAddEdt extends JDialog implements ActionListener {
         pnContent.add(tfFirstName, gbc_tfFirstName);
         tfFirstName.setColumns(10);
 
-        JLabel lbLastName = new JLabel(FieldsName[2]);
+        JLabel lbLastName = new JLabel(Messages.getString("FieldSecondName"));
         GridBagConstraints gbc_lbLastName = new GridBagConstraints();
         gbc_lbLastName.anchor = GridBagConstraints.EAST;
         gbc_lbLastName.insets = new Insets(4, 8, 4, 4);
@@ -77,7 +76,7 @@ public class DialogAddEdt extends JDialog implements ActionListener {
         pnContent.add(tfLastName, gbc_tfLastName);
         tfLastName.setColumns(10);
 
-        JLabel lbTypes = new JLabel("Тип");
+        JLabel lbTypes = new JLabel(Messages.getString("FieldType"));
         GridBagConstraints gbc_lbTypes = new GridBagConstraints();
         gbc_lbTypes.anchor = GridBagConstraints.EAST;
         gbc_lbTypes.insets = new Insets(4, 8, 4, 4);
@@ -96,7 +95,7 @@ public class DialogAddEdt extends JDialog implements ActionListener {
         gbc_cbTypes.gridy = 2;
         pnContent.add(cbTypes, gbc_cbTypes);
 
-        JLabel lbPhone = new JLabel(FieldsName[4]);
+        JLabel lbPhone = new JLabel(Messages.getString("FieldPhone"));
         GridBagConstraints gbc_lbPhone = new GridBagConstraints();
         gbc_lbPhone.anchor = GridBagConstraints.EAST;
         gbc_lbPhone.insets = new Insets(4, 8, 4, 4);
@@ -116,10 +115,10 @@ public class DialogAddEdt extends JDialog implements ActionListener {
         tfPhone.setColumns(10);
 
         JPanel pnButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        btOK = new JButton(TitleBtOk);
+        btOK = new JButton(Messages.getString("TitleBtOk"));
         btOK.setActionCommand("ok");
         btOK.addActionListener(this);
-        btCancel = new JButton(TitleBtCancel);
+        btCancel = new JButton(Messages.getString("TitleBtCancel"));
         btCancel.setActionCommand("cancel");
         btCancel.addActionListener(this);
         pnButtons.add(btOK);

@@ -8,8 +8,6 @@ import javax.swing.table.TableModel;
 import Common.DataModule;
 import Common.DBTableModel;
 
-import static Common.Strings.*;
-
 @SuppressWarnings("serial")
 public class PhonePad extends JFrame implements ActionListener {
 	private JTable jtabMain;
@@ -30,16 +28,16 @@ public class PhonePad extends JFrame implements ActionListener {
 	}
 
 	public PhonePad() {
-		setTitle(TitleApp);
+		setTitle(Messages.getString("TitleApp"));
         setIconImage(Toolkit.getDefaultToolkit().getImage(PhonePad.class.getResource("/Resources/main.png")));
 		getContentPane().setLayout(new BorderLayout(0, 0));		
-        setSize(500, 400);
+        setSize(640, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dm = new DataModule("notepad.sqlite");
         dm.openMain();
         maintm = new DBTableModel();
         maintm.initData(dm.getRsMain());
-        jtabMain = new JTable(maintm);
+        jtabMain = new JTable();
         jtabMain.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
@@ -48,18 +46,44 @@ public class PhonePad extends JFrame implements ActionListener {
         		}	
         	}
         });
+        jtabMain.setModel(maintm);
+        jtabMain.setFillsViewportHeight(true);
+        jtabMain.setRowHeight(21);
+        jtabMain.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jtabMain.getTableHeader().setResizingAllowed(false);
+        jtabMain.getTableHeader().setReorderingAllowed(false);
+        jtabMain.setGridColor(Color.LIGHT_GRAY);
+        jtabMain.setIntercellSpacing(new Dimension(0, 1));
+        
+        if (jtabMain.getColumnModel().getColumnCount() > 0) {
+        	jtabMain.getColumnModel().getColumn(0).setMinWidth(30);
+        	jtabMain.getColumnModel().getColumn(0).setPreferredWidth(0);
+        	jtabMain.getColumnModel().getColumn(0).setMaxWidth(0);
+        	jtabMain.getColumnModel().getColumn(1).setMinWidth(200);
+        	jtabMain.getColumnModel().getColumn(1).setPreferredWidth(0);
+        	jtabMain.getColumnModel().getColumn(1).setMaxWidth(0);
+        	jtabMain.getColumnModel().getColumn(2).setMinWidth(200);
+        	jtabMain.getColumnModel().getColumn(2).setPreferredWidth(0);
+        	jtabMain.getColumnModel().getColumn(2).setMaxWidth(0);
+        	jtabMain.getColumnModel().getColumn(3).setMinWidth(80);
+        	jtabMain.getColumnModel().getColumn(3).setPreferredWidth(0);
+        	jtabMain.getColumnModel().getColumn(3).setMaxWidth(0);
+        	jtabMain.getColumnModel().getColumn(4).setMinWidth(100);
+        	jtabMain.getColumnModel().getColumn(4).setPreferredWidth(0);
+        	jtabMain.getColumnModel().getColumn(4).setMaxWidth(0);
+        }       
         JScrollPane jscrlp = new JScrollPane(jtabMain);
         jtabMain.setPreferredScrollableViewportSize(new Dimension(450, 110));
         getContentPane().add(jscrlp, BorderLayout.CENTER);
         jtabMain.setRowSelectionInterval(0, 0);
         jbtPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        jbtAdd = new JButton(TitleBtAdd);
+        jbtAdd = new JButton(Messages.getString("ButtonAdd"));
         jbtAdd.setActionCommand("add");
         jbtAdd.addActionListener(this);
-        jbtEdt = new JButton(TitleBtEdt);
+        jbtEdt = new JButton(Messages.getString("ButtonEdit"));
         jbtEdt.setActionCommand("edt");
         jbtEdt.addActionListener(this);
-        jbtDel = new JButton(TitleBtDel);
+        jbtDel = new JButton(Messages.getString("ButtonDel"));
         jbtDel.setActionCommand("del");
         jbtDel.addActionListener(this);
         jbtPanel.add(jbtAdd);
@@ -93,7 +117,7 @@ public class PhonePad extends JFrame implements ActionListener {
 
     public void addRecords(){
         TableModel tm = jtabMain.getModel();
-        DialogAddEdt dae = new DialogAddEdt(this, TitleDlgAdd, dm);
+        DialogAddEdt dae = new DialogAddEdt(this, Messages.getString("TitleDlgAdd"), dm);
         dae.setVisible(true);
         if (dae.getModalResult() != 0) {
             if (dm.editMain(-1, dae.tfFirstName.getText(), dae.tfLastName.getText(), dae.cbTypes.getSelectedIndex(), dae.tfPhone.getText()) != -1){
@@ -107,7 +131,7 @@ public class PhonePad extends JFrame implements ActionListener {
         int row = jtabMain.getSelectedRow();
         TableModel tm = jtabMain.getModel();
         if (row != -1) {
-            DialogAddEdt dae = new DialogAddEdt(this, TitleDlgEdt, dm);
+            DialogAddEdt dae = new DialogAddEdt(this, Messages.getString("TitleDlgEdt"), dm);
             id = (String) tm.getValueAt(row, 0);
             dae.tfFirstName.setText((String) tm.getValueAt(row, 1));
             dae.tfLastName.setText((String) tm.getValueAt(row,2));
@@ -127,11 +151,13 @@ public class PhonePad extends JFrame implements ActionListener {
         int row = jtabMain.getSelectedRow();
         TableModel tm = jtabMain.getModel();
         if (row != -1) {
-            id = (String) tm.getValueAt(row, 0);
-            if (dm.deleteMain(Integer.parseInt(id)) != -1) {
-                if (row != 0) {row--;}
-                refreshTable(row);
-            }
+        	if (JOptionPane.showConfirmDialog(this, Messages.getString("ConfimDel"), Messages.getString("TitleConfirmDel"), JOptionPane.YES_NO_OPTION) == 0) {       	
+        		id = (String) tm.getValueAt(row, 0);
+        		if (dm.deleteMain(Integer.parseInt(id)) != -1) {
+        			if (row != 0) {row--;}
+        			refreshTable(row);
+        		}
+        	}
         }
     }
 
