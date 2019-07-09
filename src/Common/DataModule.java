@@ -16,7 +16,7 @@ public class DataModule {
         connectDB = null;
         try {
             try {
-                Class.forName("org.sqlite.JDBC");
+                Class.forName(Strings.ClassName);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -58,9 +58,9 @@ public class DataModule {
         String sqlEdit = "";
         int res = -1;
         if (id<0){
-            sqlEdit = "INSERT INTO main (first_name, last_name, type, phone) VALUES (\""+FirstName+"\",\""+LastName+"\","+types+",\""+Phone+"\")";
+            sqlEdit = String.format(Strings.SqlAdd, FirstName, LastName, types, Phone);
         } else {
-            sqlEdit = "UPDATE main SET first_name=\""+FirstName+"\", last_name=\""+LastName+"\", type="+types+", phone=\""+Phone+"\" WHERE id="+id;
+            sqlEdit = String.format(Strings.SqlEdit, FirstName, LastName, types, Phone, id);
         }
         try {
             statExec = connectDB.createStatement();
@@ -76,7 +76,7 @@ public class DataModule {
         int res = -1;
         try {
             statExec = connectDB.createStatement();
-            res = statExec.executeUpdate(Strings.SqlDelete+id);
+            res = statExec.executeUpdate(String.format(Strings.SqlDelete, id));
             statExec.close();
         } catch (SQLException e) {
             e.printStackTrace();
