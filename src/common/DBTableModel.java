@@ -1,4 +1,4 @@
-package Common;
+package common;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -7,18 +7,18 @@ import javax.swing.table.AbstractTableModel;
 @SuppressWarnings("serial")
 public class DBTableModel extends AbstractTableModel{
     private int countRows;
-    private DBFieldSet mfs;
+    private DBFieldSet dbFS;
     private ArrayList<String[]> data;
     
     public void initData(ResultSet rs){
         countRows = 0;
         data.clear();
-        int colcount = mfs.getFieldSet().size();
+        int colcount = dbFS.getFieldSet().size();
         try {
             while (rs.next()) {
                 String[] rdata = new String[colcount];
                 for (int c = 0; c < colcount; c++) {
-                    rdata[c] = rs.getString(mfs.getFieldSet().get(c).getName());
+                    rdata[c] = rs.getString(dbFS.getFieldSet().get(c).getName());
                 }
                 data.add(rdata);
                 countRows++;
@@ -30,7 +30,7 @@ public class DBTableModel extends AbstractTableModel{
 
     public DBTableModel(){
         super();
-        mfs = new DBFieldSet();
+        dbFS = new DBFieldSet();
         data = new ArrayList<>();
     }
 
@@ -41,11 +41,12 @@ public class DBTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return mfs.getFieldSet().size();
+        return dbFS.getFieldSet().size();
     }
 
+    @Override
     public String getColumnName(int column){
-        return mfs.getFieldSet().get(column).getTitle();
+        return dbFS.getFieldSet().get(column).getTitle();
     }
 
     @Override

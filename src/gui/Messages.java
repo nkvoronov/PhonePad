@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.beans.Beans;
 import java.util.MissingResourceException;

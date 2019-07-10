@@ -1,13 +1,13 @@
-package Common;
+package common;
 
 import java.util.ArrayList;
-import GUI.Messages;
+
+import gui.Messages;
 
 public class DBFieldSet {	
-	private ArrayList<DBField> fieldSet;
+	private ArrayList<DBField> fieldSet = new ArrayList<>();
 	
     public DBFieldSet() {
-        fieldSet = new ArrayList<>();
         DBField fld = new DBField("id", Messages.getString("FieldIndex"));
         fld.setVisible(false);
         fieldSet.add(fld);

@@ -1,4 +1,4 @@
-package Common;
+package common;
 
 import java.sql.*;
 
@@ -11,12 +11,12 @@ public class DataModule {
     private Statement statExec;
     private String url;
 
-    public DataModule(String DBDest) {
-        this.url = Strings.UrlPre + DBDest;
+    public DataModule(String dbDest) {
+        this.url = UtilStrings.URL_PRE + dbDest;
         connectDB = null;
         try {
             try {
-                Class.forName(Strings.ClassName);
+                Class.forName(UtilStrings.CLASS_NAME);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -34,7 +34,7 @@ public class DataModule {
     public void openMain(){
         try {
             statMain = connectDB.createStatement();
-            rsMain = statMain.executeQuery(Strings.SqlSelMain);
+            rsMain = statMain.executeQuery(UtilStrings.SQL_SELMAIN);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -54,13 +54,13 @@ public class DataModule {
         openMain();
     }
 
-    public int editMain(int id, String FirstName, String LastName, int types, String Phone){
+    public int editMain(int id, String firstName, String lastName, int types, String phone){
         String sqlEdit = "";
         int res = -1;
         if (id<0){
-            sqlEdit = String.format(Strings.SqlAdd, FirstName, LastName, types, Phone);
+            sqlEdit = String.format(UtilStrings.SQL_ADD, firstName, lastName, types, phone);
         } else {
-            sqlEdit = String.format(Strings.SqlEdit, FirstName, LastName, types, Phone, id);
+            sqlEdit = String.format(UtilStrings.SQL_EDIT, firstName, lastName, types, phone, id);
         }
         try {
             statExec = connectDB.createStatement();
@@ -76,7 +76,7 @@ public class DataModule {
         int res = -1;
         try {
             statExec = connectDB.createStatement();
-            res = statExec.executeUpdate(String.format(Strings.SqlDelete, id));
+            res = statExec.executeUpdate(String.format(UtilStrings.SQL_DELETE, id));
             statExec.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,7 +87,7 @@ public class DataModule {
     public void openTypes(){
         try {
             statTypes = connectDB.createStatement();
-            rsTypes = statTypes.executeQuery(Strings.SqlSelTypes);
+            rsTypes = statTypes.executeQuery(UtilStrings.SQL_SELTYPES);
         } catch (SQLException e) {
             e.printStackTrace();
         }
