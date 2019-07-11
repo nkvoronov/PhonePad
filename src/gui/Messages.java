@@ -10,7 +10,7 @@ public class Messages {
 		// do not instantiate
 	}
 
-	private static final String BUNDLE_NAME = "GUI.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "gui.messages"; //$NON-NLS-1$
 	private static final ResourceBundle RESOURCE_BUNDLE = loadBundle();
 	private static ResourceBundle loadBundle() {
 		return ResourceBundle.getBundle(BUNDLE_NAME);
