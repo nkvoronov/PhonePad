@@ -1,11 +1,12 @@
 package common;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import gui.Messages;
 
 public class DBFieldSet {	
-	private ArrayList<DBField> fieldSet = new ArrayList<>();
+	private List<DBField> fieldSet = new ArrayList<>();
 	
     public DBFieldSet() {
         DBField fld = new DBField("id", Messages.getString("FieldIndex"));
@@ -21,7 +22,7 @@ public class DBFieldSet {
         fieldSet.add(fld);
     }
 
-    public ArrayList<DBField> getFieldSet() {
+    public List<DBField> getFieldSet() {
         return fieldSet;
     }
 

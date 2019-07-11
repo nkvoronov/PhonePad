@@ -10,7 +10,7 @@ public class UtilStrings {
 	public static final String SQL_EDIT        = "UPDATE main SET first_name=\"%s\", last_name=\"%s\", type=%d, phone=\"%s\" WHERE id=%d";
 	
 	private UtilStrings() {
-		throw new IllegalStateException("Utility class");
+		// do not instantiate
 	}
 	
 }

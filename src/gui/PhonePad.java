@@ -38,7 +38,7 @@ public class PhonePad extends JFrame implements ActionListener {
 	
 	private void initGUI() {
 		setTitle(Messages.getString("TitleApp"));
-        setIconImage(Toolkit.getDefaultToolkit().getImage(PhonePad.class.getResource("/Resources/main.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(PhonePad.class.getResource("/resources/main.png")));
 		getContentPane().setLayout(new BorderLayout(0, 0));		
         setSize(640, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
