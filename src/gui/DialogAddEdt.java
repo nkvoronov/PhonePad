@@ -83,7 +83,7 @@ public class DialogAddEdt extends JDialog implements ActionListener {
         gbcjlbTypes.gridy = 2;
         jpnContent.add(jlbTypes, gbcjlbTypes);
 
-        jcbTypes = new JComboBox<String>();
+        jcbTypes = new JComboBox<>();
         addTypes();
         jlbTypes.setLabelFor(jcbTypes);
         GridBagConstraints gbcjcbTypes = new GridBagConstraints();

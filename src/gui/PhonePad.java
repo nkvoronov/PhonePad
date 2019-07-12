@@ -124,10 +124,8 @@ public class PhonePad extends JFrame implements ActionListener {
         TableModel tm = jtbMain.getModel();
         DialogAddEdt dialogEdit = new DialogAddEdt(this, Messages.getString("TitleDlgAdd"), dataModule);
         dialogEdit.setVisible(true);
-        if (dialogEdit.getModalResult() != 0) {
-            if (dataModule.editMain(-1, dialogEdit.getFirstName(), dialogEdit.getLastName(), dialogEdit.getTypes(), dialogEdit.getPhone()) != -1){
-                refreshTable(tm.getRowCount());
-            };
+        if ((dialogEdit.getModalResult() != 0) && (dataModule.editMain(-1, dialogEdit.getFirstName(), dialogEdit.getLastName(), dialogEdit.getTypes(), dialogEdit.getPhone()) != -1)) {
+            refreshTable(tm.getRowCount());
         }
     }
 
@@ -143,10 +141,8 @@ public class PhonePad extends JFrame implements ActionListener {
             dialogEdit.setTypes((String) tm.getValueAt(row,3));
             dialogEdit.setPhone((String) tm.getValueAt(row,4));
             dialogEdit.setVisible(true);
-            if (dialogEdit.getModalResult() != 0) {
-                if (dataModule.editMain(Integer.parseInt(id),dialogEdit.getFirstName(),dialogEdit.getLastName(),dialogEdit.getTypes(),dialogEdit.getPhone()) != -1){
-                    refreshTable(row);
-                };
+            if ((dialogEdit.getModalResult() != 0) && (dataModule.editMain(Integer.parseInt(id),dialogEdit.getFirstName(),dialogEdit.getLastName(),dialogEdit.getTypes(),dialogEdit.getPhone()) != -1)) {
+                refreshTable(row);
             }
         }
     }
@@ -155,15 +151,13 @@ public class PhonePad extends JFrame implements ActionListener {
         String id;
         int row = jtbMain.getSelectedRow();
         TableModel tm = jtbMain.getModel();
-        if (row != -1) {
-        	if (JOptionPane.showConfirmDialog(this, Messages.getString("ConfimDel"), Messages.getString("TitleConfirmDel"), JOptionPane.YES_NO_OPTION) == 0) {       	
-        		id = (String) tm.getValueAt(row, 0);
-        		if (dataModule.deleteMain(Integer.parseInt(id)) != -1) {
-        			if (row != 0) {row--;}
-        			refreshTable(row);
-        		}
+        if ((row != -1) && (JOptionPane.showConfirmDialog(this, Messages.getString("ConfimDel"), Messages.getString("TitleConfirmDel"), JOptionPane.YES_NO_OPTION) == 0)) {       	
+        	id = (String) tm.getValueAt(row, 0);
+        	if (dataModule.deleteMain(Integer.parseInt(id)) != -1) {
+        		if (row != 0) {row--;}
+        		refreshTable(row);
         	}
-        }
+        }     
     }
 
     public void refreshTable(int row){

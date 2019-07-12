@@ -15,11 +15,11 @@ public class DataModule {
         this.url = UtilStrings.URL_PRE + dbDest;
         connectDB = null;
         try {
-            try {
-                Class.forName(UtilStrings.CLASS_NAME);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        	Class.forName(UtilStrings.CLASS_NAME);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }        
+        try {
             connectDB = DriverManager.getConnection(this.url);
             statMain = null;
             rsMain = null;
